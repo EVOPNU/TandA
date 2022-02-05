@@ -1,0 +1,3 @@
+﻿  Zachet.cpp
+C:\Users\Steam\source\repos\Zachet\Zachet\Zachet.cpp(10,26): warning C4101: r: неиспользованная локальная переменная
+  Zachet.vcxproj -> C:\Users\Steam\source\repos\Zachet\Debug\Zachet.exe
