@@ -1,0 +1,5 @@
+suraifokkusu\controllers\ProductController.class
+suraifokkusu\GetAllProductApplication.class
+suraifokkusu\services\ProductService.class
+suraifokkusu\repositories\ProductRepository.class
+suraifokkusu\entities\Product.class

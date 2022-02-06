@@ -1,0 +1,17 @@
+Index: TA_01/GetAllProduct/src/test/java/suraifokkusu/GetAllProductApplicationTests.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package suraifokkusu;\r\n\r\nimport org.junit.jupiter.api.Test;\r\nimport org.springframework.boot.test.context.SpringBootTest;\r\n\r\n//@SpringBootTest\r\nclass GetAllProductApplicationTests {\r\n\r\n    @Test\r\n    void contextLoads() {\r\n    }\r\n\r\n}\r\n
+===================================================================
+diff --git a/TA_01/GetAllProduct/src/test/java/suraifokkusu/GetAllProductApplicationTests.java b/TA_01/GetAllProduct/src/test/java/suraifokkusu/GetAllProductApplicationTests.java
+--- a/TA_01/GetAllProduct/src/test/java/suraifokkusu/GetAllProductApplicationTests.java	
++++ b/TA_01/GetAllProduct/src/test/java/suraifokkusu/GetAllProductApplicationTests.java	
+@@ -3,7 +3,7 @@
+ import org.junit.jupiter.api.Test;
+ import org.springframework.boot.test.context.SpringBootTest;
+ 
+-//@SpringBootTest
++/@SpringBootTest
+ class GetAllProductApplicationTests {
+ 
+     @Test
