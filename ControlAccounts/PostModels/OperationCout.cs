@@ -5,10 +5,10 @@ namespace ControlAccounts.PostModels
     public class OperationCout
     {
         [Required]
-        public int id { get; set; }
+        public int userid { get; set; }
 
         [Required]
-        public int count { get; set; }
+        public int price { get; set; }
 
   
     }

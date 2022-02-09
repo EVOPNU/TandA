@@ -112,19 +112,25 @@ namespace ControlAccounts.Controllers
         [Route("addmoney")]
         [HttpPut]
         [Authorize(Roles = "Admin")]
-        public IActionResult ChangeMoneyMul([FromBody] OperationCout model)
+        public IActionResult ChangeMoneyMul([FromBody] List<OperationCout> model)
         {
             using ApplicationContext db = new ApplicationContext();
             {
                 foreach (var l in db.accounts.ToList())
                 {
-                    if (l.Id == model.id)
+                    foreach (var item in model)
                     {
-                        l.Money = l.Money + model.count;
-                        db.SaveChanges();
-                        return Ok(l);
-                        //тестиииить
+
+
+                        if (l.Id == item.userid)
+                        {
+                            l.Money = l.Money + item.price;
+                            db.SaveChanges();
+                            return Ok(l);
+                            //тестиииить
+                        }
                     }
+
                 }
 
             }
@@ -135,15 +141,15 @@ namespace ControlAccounts.Controllers
         [Route("minusmoney")]
         [HttpPut]
         [Authorize(Roles = "Admin")]
-        public IActionResult ChangeMoneyMin([FromBody] OperationCout model)
+        public IActionResult ChangeMoneyMin([FromBody]OperationCout model)
         {
             using ApplicationContext db = new ApplicationContext();
             {
                 foreach (var l in db.accounts.ToList())
                 {
-                    if (l.Id== model.id && l.Money > model.count)
+                    if (l.Id== model.userid && l.Money > model.price)
                     {
-                        l.Money = l.Money - model.count;
+                        l.Money = l.Money - model.price;
                         db.SaveChanges();
                         return Ok(l);
                         //добавить если <0
@@ -155,7 +161,9 @@ namespace ControlAccounts.Controllers
             return BadRequest();
 
         }
+
        
+
 
     }
 }

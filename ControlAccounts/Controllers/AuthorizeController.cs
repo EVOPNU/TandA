@@ -7,6 +7,8 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using ControlAccounts.PostModels;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Cryptography;
+using System.Text;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -49,7 +51,7 @@ namespace ControlAccounts.Controllers
             {
                 foreach (var l in db.accounts.ToList())
                 {
-                    if (l.Email == email && l.Password == password)
+                    if (l.Email == email && l.Password == GetHashString( password))
                     {
                         return l;
                     }
@@ -79,7 +81,7 @@ namespace ControlAccounts.Controllers
                         }
                     }
 
-                    db.accounts.Add(new Account { Email = login.Email, Password = login.Password, Role = "User", Name = login.Name });
+                    db.accounts.Add(new Account { Email = login.Email, Password = GetHashString( login.Password), Role = "User", Name = login.Name });
                     db.SaveChanges();
                     return Ok();
 
@@ -88,6 +90,27 @@ namespace ControlAccounts.Controllers
             }
             return BadRequest(); //шо це таке 
         }
+        string GetHashString(string s)
+        {
+            //переводим строку в байт-массим
+            byte[] bytes = Encoding.Unicode.GetBytes(s);
+
+            //создаем объект для получения средст шифрования
+            MD5CryptoServiceProvider CSP =
+                new MD5CryptoServiceProvider();
+
+            //вычисляем хеш-представление в байтах
+            byte[] byteHash = CSP.ComputeHash(bytes);
+
+            string hash = string.Empty;
+
+            //формируем одну цельную строку из массива
+            foreach (byte b in byteHash)
+                hash += string.Format("{0:x2}", b);
+
+            return hash;
+        }
+
 
         [Route("Valid")]
         [HttpGet]
@@ -103,7 +126,7 @@ namespace ControlAccounts.Controllers
             var tokenS = jsonToken as JwtSecurityToken;
             var jti = tokenS.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value;
 
-            return Ok(jti);
+            return Ok(new { id = jti });
         }
         private string GenerateJWT(Account user)
         {
