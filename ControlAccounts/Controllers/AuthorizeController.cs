@@ -49,9 +49,9 @@ namespace ControlAccounts.Controllers
         {
             using ApplicationContext db = new ApplicationContext();
             {
-                foreach (var l in db.accounts.ToList())
+                foreach (var l in db.account.ToList())
                 {
-                    if (l.Email == email && l.Password == GetHashString( password))
+                    if (l.email == email && l.password == GetHashString( password))
                     {
                         return l;
                     }
@@ -73,15 +73,15 @@ namespace ControlAccounts.Controllers
             {
                 using ApplicationContext db = new ApplicationContext();
                 {
-                    foreach (var l in db.accounts.ToList())
+                    foreach (var l in db.account.ToList())
                     {
-                        if (l.Email == login.Email)
+                        if (l.email == login.Email)
                         {
                             return BadRequest("AlredyExist"); //какой код то
                         }
                     }
 
-                    db.accounts.Add(new Account { Email = login.Email, Password = GetHashString( login.Password), Role = "User", Name = login.Name });
+                    db.account.Add(new Account { email = login.Email, password = GetHashString( login.Password), role = "User", name = login.Name });
                     db.SaveChanges();
                     return Ok();
 
@@ -133,15 +133,15 @@ namespace ControlAccounts.Controllers
             string role;
             using ApplicationContext db = new ApplicationContext();
             { 
-                role = db.accounts.FirstOrDefault(a=>a.Email == user.Email).Role;
+                role = db.account.FirstOrDefault(a=>a.email == user.email).role;
             }
                 var authParams = options.Value;
             var securityKey = authParams.GetSymmetricSecurityKey();
             var credentinals = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new List<Claim>()
             {
-                new Claim(JwtRegisteredClaimNames.Email,user.Email),
-                new Claim(JwtRegisteredClaimNames.Sub,user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Email,user.email),
+                new Claim(JwtRegisteredClaimNames.Sub,user.id.ToString()),
                // new Claim(ClaimsIdentity.DefaultRoleClaimType,"Admin"),
                 new Claim("role",role)
                 //new Claim(JwtRegisteredClaimNames.Iss,authParams.Issure)

@@ -19,7 +19,7 @@ namespace ControlAccounts.Controllers
         {
             using ApplicationContext db = new ApplicationContext();
             {
-                return Ok(db.accounts.FirstOrDefault(a => a.Id == id));
+                return Ok(db.account.FirstOrDefault(a => a.id == id));
             }
             return Unauthorized();
         }
@@ -47,11 +47,11 @@ namespace ControlAccounts.Controllers
         {
             using ApplicationContext db = new ApplicationContext();
             {
-                foreach (var l in db.accounts.ToList())
+                foreach (var l in db.account.ToList())
                 {
-                    if (l.Email == login.Email && l.Password == login.Password)
+                    if (l.email == login.Email && l.password == login.Password)
                     {
-                        l.Password = login.Name;
+                        l.password = login.Name;
                         db.SaveChanges();
                         return Ok(l);
                         //тестиииить
@@ -70,11 +70,11 @@ namespace ControlAccounts.Controllers
         {
             using ApplicationContext db = new ApplicationContext();
             {
-                foreach (var l in db.accounts.ToList())
+                foreach (var l in db.account.ToList())
                 {
-                    if (l.Email == loginE.Email && l.Password == loginE.Password)
+                    if (l.email == loginE.Email && l.password == loginE.Password)
                     {
-                        l.Email = loginE.NewEmail;
+                        l.email = loginE.NewEmail;
                         db.SaveChanges();
                         return Ok(l);
                         //тестиииить
@@ -93,11 +93,11 @@ namespace ControlAccounts.Controllers
         {
             using ApplicationContext db = new ApplicationContext();
             {
-                foreach (var l in db.accounts.ToList())
+                foreach (var l in db.account.ToList())
                 {
-                    if (l.Email == login.Email && l.Password == login.Password)
+                    if (l.email == login.Email && l.password == login.Password)
                     {
-                        l.Name = login.Name;
+                        l.name = login.Name;
                         db.SaveChanges();
                         return Ok(l);
                         //тестиииить
@@ -116,15 +116,15 @@ namespace ControlAccounts.Controllers
         {
             using ApplicationContext db = new ApplicationContext();
             {
-                foreach (var l in db.accounts.ToList())
+                foreach (var l in db.account.ToList())
                 {
                     foreach (var item in model)
                     {
 
 
-                        if (l.Id == item.userid)
+                        if (l.id == item.userid)
                         {
-                            l.Money = l.Money + item.price;
+                            l.money = l.money + item.price;
                             db.SaveChanges();
                             return Ok(l);
                             //тестиииить
@@ -145,11 +145,11 @@ namespace ControlAccounts.Controllers
         {
             using ApplicationContext db = new ApplicationContext();
             {
-                foreach (var l in db.accounts.ToList())
+                foreach (var l in db.account.ToList())
                 {
-                    if (l.Id== model.userid && l.Money > model.price)
+                    if (l.id== model.userid && l.money > model.price)
                     {
-                        l.Money = l.Money - model.price;
+                        l.money = l.money - model.price;
                         db.SaveChanges();
                         return Ok(l);
                         //добавить если <0
