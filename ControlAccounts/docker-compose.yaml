@@ -1,0 +1,29 @@
+version: '3'
+services:
+  
+  apatrios-springbootapp-backend:
+    image: apatrios/db-initializer-db:latest
+    ports:
+      - 8080
+    depends_on:
+      - db
+    command: bash -c "/apps/wait-for-service.sh db 3306 && /apps/entrypoint.sh"
+
+  db:
+    #    image: postgres
+    #    restart: always
+    #    environment:
+    #      POSTGRES_PASSWORD: password
+    #    ports:
+    #    - 5432:5432
+
+    image: mysql:8.0.23
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
